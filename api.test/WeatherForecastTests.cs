@@ -1,4 +1,7 @@
 using api.Controllers;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.EnvironmentVariables;
+using Microsoft.Extensions.Configuration.Json;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -13,15 +16,20 @@ namespace api.test;
 [ExcludeFromCodeCoverage]
 public class UnitTest1
 {
-    private ILogger _logger;
-    private IHost _host;
+    private ILogger _logger = NullLogger.Instance;
+    private IHost? _host;
 
     [TestInitialize]
     public void Init()
     {
-        var builder = Host.CreateDefaultBuilder().
-            ConfigureLogging((builderContext, loggingBuilder) => {
-                loggingBuilder.AddConsole((options) => {
+        // Acquire logger by building it explicitly
+        var builder = Host.CreateDefaultBuilder()
+            .ConfigureAppConfiguration( (hostingContext, config) => {
+                config.AddJsonFile("appsettings.json");
+                config.AddEnvironmentVariables(prefix: "net6_cicd_");
+            })
+            .ConfigureLogging((builderContext, loggingBuilder) => {
+                loggingBuilder.AddSimpleConsole((options) => {
                     options.IncludeScopes = true;
                 });
             });
@@ -33,17 +41,20 @@ public class UnitTest1
     [TestMethod]
     public void TestMethod1()
     {
-        var l = _host.Services.GetRequiredService<ILogger<WeatherForecastController>>();
-        var ctrl = new WeatherForecastController(l);
+        if (_host != null)
+        {
+            // Acquire logger via host's services
+            var l = _host.Services.GetRequiredService<ILogger<WeatherForecastController>>();
+            var ctrl = new WeatherForecastController(l);
 
-        var resp = ctrl.Get();
-        Assert.IsNotNull(resp);
+            var resp = ctrl.Get();
+            Assert.IsNotNull(resp);
 
-        foreach (var wf in resp) {
-            System.Console.WriteLine($"{wf.Date}: {wf.Summary}");
+            foreach (var wf in resp) {
+                System.Console.WriteLine($"{wf.Date}: {wf.Summary}");
+            }
+            // Assert.IsNull(resp);
         }
-
-        // Assert.IsNull(resp);
     }
 
 
