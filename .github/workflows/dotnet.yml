@@ -11,15 +11,23 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    env:
+      SLN_FILE_PATH:  ./net6-cicd-az.sln
+
     steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET 6.0 SDK
-      uses: actions/setup-dotnet@v2
-      with:
-        dotnet-version: 6.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+      - uses: actions/checkout@v3
+
+      # Echo the workspace; useful for debugging workflow
+      - name: Echo Workspace
+        run: echo $env:GITHUB_WORKSPACE
+
+      - name: Setup .NET 6.0 SDK
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: 6.0.x
+      - name: Restore dependencies
+        run: dotnet restore ${{ env.SLN_FILE_PATH }}
+      - name: Build
+        run: dotnet build --no-restore ${{ env.SLN_FILE_PATH }}
+      - name: Test
+        run: dotnet test --no-build --verbosity normal ${{ env.SLN_FILE_PATH }}
