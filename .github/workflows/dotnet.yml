@@ -13,7 +13,7 @@ jobs:
 
     env:
       SLN_FILE_PATH:  ./net6-cicd-az.sln
-      COMMIT_HASH: `${GITHUB_SHA::8}`
+      COMMIT_HASH: eval (${GITHUB_SHA::8})
 
     steps:
       - uses: actions/checkout@v3
