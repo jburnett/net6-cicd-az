@@ -19,7 +19,9 @@ jobs:
 
       # Echo the workspace; useful for debugging workflow
       - name: Echo Workspace
-        run: echo $env:GITHUB_WORKSPACE
+        run: echo $env:GITHUB_WORKSPACE \
+          echo $env:GITHUB_REF_NAME \
+          echo $env:GITHUB_SHA
 
       - name: Setup .NET 6.0 SDK
         uses: actions/setup-dotnet@v2
