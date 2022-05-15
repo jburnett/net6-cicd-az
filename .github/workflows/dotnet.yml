@@ -21,9 +21,9 @@ jobs:
 
       # Echo the workspace; useful for debugging workflow
       - name: Echo Workspace
-        run: echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE " \
-          echo $GITHUB_REF_NAME \
-          echo "GITHUB_SHA: $GITHUB_SHA" \
+        run: echo GITHUB_WORKSPACE $GITHUB_WORKSPACE
+        run: echo $GITHUB_REF_NAME \
+          echo "GITHUB_SHA:" $GITHUB_SHA \
           echo $SHA8
 
       # - name: set short sha 1
