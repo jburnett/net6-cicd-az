@@ -14,6 +14,7 @@ jobs:
     env:
       SLN_FILE_PATH:  ./net6-cicd-az.sln
 #      COMMIT_HASH_SHORT: "`git rev-parse --short HEAD`"
+      SHA8: ${GITHUB_SHA::8}
 
     steps:
       - uses: actions/checkout@v3
@@ -22,17 +23,18 @@ jobs:
       - name: Echo Workspace
         run: echo $GITHUB_WORKSPACE \
           echo $GITHUB_REF_NAME \
-          echo $GITHUB_SHA
+          echo $GITHUB_SHA \
+          echo $SHA8
 
-      - name: set short sha 1
-        run: "sha_short1=$(git rev-parse --short $GITHUB_SHA)"
+      # - name: set short sha 1
+      #   run: "sha_short1=$(git rev-parse --short $GITHUB_SHA)"
 
-      - name: set short sha 2
-        run: "sha_short2=$(git rev-parse --short ${GITHUB_SHA})"
+      # - name: set short sha 2
+      #   run: "sha_short2=$(git rev-parse --short ${GITHUB_SHA})"
 
-      - name: show shas
-        run: echo ${{env.sha_short1}} \
-          echo ${{env.sha_short2}} 
+      # - name: show shas
+      #   run: echo ${{env.sha_short1}} \
+      #     echo ${{env.sha_short2}} 
 
       - name: Setup .NET 6.0 SDK
         uses: actions/setup-dotnet@v2
