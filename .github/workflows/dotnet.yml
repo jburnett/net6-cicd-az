@@ -23,8 +23,14 @@ jobs:
         run: echo $GITHUB_WORKSPACE \
           echo $GITHUB_REF_NAME \
           echo $GITHUB_SHA \ 
-          echo $COMMIT_HASH_SHORT \
-          echo "${GITHUB_SHA} | cut -c1-8" \
+          echo $COMMIT_HASH_SHORT
+
+      - name: show short sha 1
+        run: \
+          echo "${GITHUB_SHA} | cut -c1-8"
+
+      - name: show short sha 2
+        run: \
           echo "${{GITHUB_SHA}} | cut -c1-8"
 
       - name: Setup .NET 6.0 SDK
