@@ -2,7 +2,7 @@ name: .NET
 
 on:
   push:
-    branches: [ main, 'dev*', 'feat*/**' ]
+    branches: [ main, 'dev*', 'feat*/**', 'feature/**', 'fix/**' ]
   pull_request:
     branches: [ main ]
 
@@ -13,7 +13,7 @@ jobs:
 
     env:
       SLN_FILE_PATH:  ./net6-cicd-az.sln
-      COMMIT_HASH_SHORT: $(git rev-parse --short HEAD)
+      COMMIT_HASH_SHORT: `git rev-parse --short HEAD`
 
     steps:
       - uses: actions/checkout@v3
@@ -23,7 +23,9 @@ jobs:
         run: echo $GITHUB_WORKSPACE \
           echo $GITHUB_REF_NAME \
           echo $GITHUB_SHA \ 
-          echo $COMMIT_HASH_SHORT
+          echo $COMMIT_HASH_SHORT \
+          echo "${GITHUB_SHA} | cut -c1-8" \
+          echo "${{GITHUB_SHA}} | cut -c1-8"
 
       - name: Setup .NET 6.0 SDK
         uses: actions/setup-dotnet@v2
