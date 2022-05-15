@@ -14,8 +14,8 @@ jobs:
     env:
       SLN_FILE_PATH:  ./net6-cicd-az.sln
 #      COMMIT_HASH_SHORT: "`git rev-parse --short HEAD`"
-      SHA8: ${ GITHUB_SHA::8 }
-      SHA82: ${{ GITHUB_SHA::8 }}
+      SHA8: "${ GITHUB_SHA::8 }"
+      SHA82: "${{ GITHUB_SHA::8 }}"
 
     steps:
       - uses: actions/checkout@v3
