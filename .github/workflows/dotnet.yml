@@ -29,10 +29,6 @@ jobs:
         run: \
           echo "${GITHUB_SHA} | cut -c1-8"
 
-      - name: show short sha 2
-        run: \
-          echo "${{GITHUB_SHA}} | cut -c1-8"
-
       - name: Setup .NET 6.0 SDK
         uses: actions/setup-dotnet@v2
         with:
