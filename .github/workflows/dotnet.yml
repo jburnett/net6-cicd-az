@@ -24,11 +24,15 @@ jobs:
           echo $GITHUB_REF_NAME \
           echo $GITHUB_SHA
 
-      - name: show short sha 1
-        run: echo "::set-output name=sha_short::$(git rev-parse --short $GITHUB_SHA)"
+      - name: set short sha 1
+        run: echo "::set-output name=sha_short1::$(git rev-parse --short $GITHUB_SHA)"
 
-      - name: show short sha 2
-        run: echo "::set-output name=sha_short::$(git rev-parse --short ${GITHUB_SHA})"
+      - name: set short sha 2
+        run: echo "::set-output name=sha_short2::$(git rev-parse --short ${GITHUB_SHA})"
+
+      - name: show shas
+        run: echo ${{env.sha_short1}} \
+          echo ${{env.sha_short2}} 
 
       - name: Setup .NET 6.0 SDK
         uses: actions/setup-dotnet@v2
