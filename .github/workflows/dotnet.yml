@@ -27,7 +27,7 @@ jobs:
 
       - name: show short sha 1
         run: \
-          echo "${GITHUB_SHA} | cut -c1-8"
+          echo "::set-output name=sha_short::$(git rev-parse --short ${{ github.event.pull_request.head.sha }})"
 
       - name: Setup .NET 6.0 SDK
         uses: actions/setup-dotnet@v2
