@@ -3,8 +3,11 @@ name: .NET
 on:
   push:
     branches: [ main, 'dev*', 'feat*/**', 'feature/**', 'fix/**' ]
+    paths-ignore: '.github/workflows/*'
+
   pull_request:
     branches: [ main ]
+    paths-ignore: '.github/workflows/*'
 
 jobs:
   build:
