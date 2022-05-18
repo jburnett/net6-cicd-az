@@ -1,3 +1,5 @@
+name: Show Environment Info
+
 on:
   workflow_dispatch:
     inputs:
@@ -11,22 +13,26 @@ on:
         required: true
 
 ### Env global to script 
-env:
-  BUILD_CONFIG: 'Release'
+# env:
+#   BUILD_CONFIG: 'Release'
 
 
 jobs:
   build:
-    runs-on: windows-2019
-    - run: |
-        echo "github.event.inputs.target-env ${{ github.event.inputs.target-env }}"
-        echo "github.actor ${{github.actor}}"
-        echo "github.event_name ${{github.event_name}}"
-        echo "github.ref ${{github.ref}}"
-        echo "github.ref_name ${{github.ref_name}}"
-        echo "github.ref_type ${{github.ref_type}}"
-        echo "github.path ${{github.path}}"
-        echo "github.sha ${{github.sha}}"
-        echo "github.workspace ${{github.workspace}}"
-        echo ""
-        echo "${{ env.GITHUB_ENV }}"
+    runs-on: ubuntu-latest
+    steps:
+      - name: GitHub values
+        run: |
+          echo "github.event.inputs.target-env ${{ github.event.inputs.target-env }}"
+          echo "github.actor ${{github.actor}}"
+          echo "github.event_name ${{github.event_name}}"
+          echo "github.ref ${{github.ref}}"
+          echo "github.ref_name ${{github.ref_name}}"
+          echo "github.ref_type ${{github.ref_type}}"
+          echo "github.path ${{github.path}}"
+          echo "github.sha ${{github.sha}}"
+          echo "github.workspace ${{github.workspace}}"
+
+      - name: Environment values
+        run: |
+          echo "${{ env.GITHUB_ENV }}"
