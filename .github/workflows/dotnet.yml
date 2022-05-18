@@ -2,24 +2,53 @@ name: .NET
 
 on:
   push:
-    branches: [ main, 'dev*', 'feat*/**' ]
+    branches: [ main, 'dev*', 'feat*/**', 'feature/**', 'fix/**' ]
+    paths-ignore: '.github/workflows/*'
+
   pull_request:
     branches: [ main ]
+    paths-ignore: '.github/workflows/*'
+    
+  workflow_dispatch: {}
+  
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
 
+    env:
+      SLN_FILE_PATH:  ./net6-cicd-az.sln
+      SHA8: eval "${GITHUB_SHA}"
+      # SHA8: ${{ GITHUB_SHA }}  parse fails
+
     steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET 6.0 SDK
-      uses: actions/setup-dotnet@v2
-      with:
-        dotnet-version: 6.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+      - uses: actions/checkout@v3
+
+      # Echo the workspace; useful for debugging workflow
+      #- name: Echo Workspace
+      - run: echo GITHUB_WORKSPACE $GITHUB_WORKSPACE
+      - run: echo "GITHUB_REF_NAME:" $GITHUB_REF_NAME  \
+          "GITHUB_SHA:" $GITHUB_SHA  \
+          "SHA8:" $SHA8
+
+      # - name: set short sha 1
+      #   run: "sha_short1=$(git rev-parse --short $GITHUB_SHA)"
+
+      # - name: set short sha 2
+      #   run: "sha_short2=$(git rev-parse --short ${GITHUB_SHA})"
+
+      # - name: show shas
+      #   run: echo ${{env.sha_short1}} \
+      #     echo ${{env.sha_short2}} 
+
+      - name: Setup .NET 6.0 SDK
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: 6.0.x
+      - name: Restore dependencies
+        run: dotnet restore ${{ env.SLN_FILE_PATH }}
+      - name: Build
+        run: dotnet build --no-restore ${{ env.SLN_FILE_PATH }}
+      - name: Test
+        run: dotnet test --no-build --verbosity normal ${{ env.SLN_FILE_PATH }}
