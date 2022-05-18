@@ -13,14 +13,21 @@ on:
         required: true
 
 ### Env global to script 
-# env:
-#   BUILD_CONFIG: 'Release'
+env:
+  BUILD_CONFIG: 'Release'
 
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - if: github.event.inputs.target-env == 'QA'
+        name: Set env for QA
+        run: echo "You selected QA"
+      - if: github.event.inputs.target-env == 'PROD'
+        name: Set env for PROD
+        run: echo "You selected PROD"
+
       - name: GitHub values
         run: |
           echo "github.event.inputs.target-env ${{ github.event.inputs.target-env }}"
@@ -35,4 +42,5 @@ jobs:
 
       - name: Environment values
         run: |
-          echo "${{ env.GITHUB_ENV }}"
+          echo "env.GITHUB_ENV ${{ env.GITHUB_ENV }}"
+          echo "GITHUB_ENV $GITHUB_ENV"
