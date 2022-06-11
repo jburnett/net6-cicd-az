@@ -19,8 +19,7 @@ jobs:
 
     env:
       SLN_FILE_PATH:  ./net6-cicd-az.sln
-      SHA8: eval "${GITHUB_SHA}"
-      # SHA8: ${{ GITHUB_SHA }}  parse fails
+      SHA8: eval "${GITHUB_SHA} | cut -c1-8"
 
     steps:
       - uses: actions/checkout@v3
