@@ -19,20 +19,19 @@ jobs:
 
     env:
       SLN_FILE_PATH:  ./net6-cicd-az.sln
-      SHA8: `${GITHUB_SHA} | cut -c1-8`
 
     steps:
       - name: Set 8-char SHA
         run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
-      - uses: actions/checkout@v3
 
       # Echo the workspace; useful for debugging workflow
       #- name: Echo Workspace
       - run: echo GITHUB_WORKSPACE $GITHUB_WORKSPACE
       - run: echo "GITHUB_REF_NAME:" $GITHUB_REF_NAME  \
           "GITHUB_SHA:" $GITHUB_SHA  \
-          "SHA8:" $SHA8 \
           "SHORT_SHA:" $SHORT_SHA
+
+      - uses: actions/checkout@v3
 
       # - name: set short sha 1
       #   run: "sha_short1=$(git rev-parse --short $GITHUB_SHA)"
