@@ -52,3 +52,5 @@ jobs:
         run: dotnet build --no-restore ${{ env.SLN_FILE_PATH }}
       - name: Test
         run: dotnet test --no-build --verbosity normal ${{ env.SLN_FILE_PATH }}
+      - name: Collect code coverage
+        run: make cover
