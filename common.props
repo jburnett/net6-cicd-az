@@ -1,0 +1,26 @@
+<Project>
+
+    <!-- Company, copyright -->
+    <!-- <PropertyGroup>
+        <Copyright>AltaModa Technologies 2019-2022</Copyright>
+        <Company>AltaModa Technologies</Company>
+        <Authors>@jburnett</Authors>
+    </PropertyGroup> -->
+
+    <!-- Target frameworks & compiler behaviors -->
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <!-- Assembly version & attribute controls -->
+    <!-- <PropertyGroup>
+        <VersionPrefix>0.1.0</VersionPrefix>
+
+        <GenerateAssemblyConfigurationAttribute>true</GenerateAssemblyConfigurationAttribute>
+        <GenerateAssemblyCompanyAttribute>true</GenerateAssemblyCompanyAttribute>
+        <GenerateAssemblyProductAttribute>true</GenerateAssemblyProductAttribute>
+    </PropertyGroup> -->
+
+</Project>
